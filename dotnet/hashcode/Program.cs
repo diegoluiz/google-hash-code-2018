@@ -100,7 +100,7 @@ namespace hashcode
 
             foreach (var slice in pizza.Slices)
             {
-                Log.Write("{0} {1} {2} {3}", slice.Row1, slice.Row2, slice.Col1, slice.Col2);
+                Log.Write("{0} {1} {2} {3}", slice.Row1, slice.Col1, slice.Row2, slice.Col2);
             }
 
             Log.Write("--------------- OUTPUT ---------------");

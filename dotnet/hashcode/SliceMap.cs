@@ -18,11 +18,26 @@ namespace hashcode
         }
 
         public void Write(int row1, int col1, int row2, int col2, int sliceIndex) {
-            for (var y = row1; y < row2; ++y) {
-                for (var x = col1; x < col2; ++x) {
+            for (var y = row1; y <= row2; ++y) {
+                for (var x = col1; x <= col2; ++x) {
                     map[y][x] = sliceIndex;
                 }
             }
+
+            Console.WriteLine();
+            Console.WriteLine($"Write bitmap values {row1} {col1} {row2} {col2} = {sliceIndex}. Bitmap now is:");
+            for (var y = 0; y < map.Length; ++y) {
+                for (var x = 0; x < map[y].Length; ++x) {
+                    if (map[y][x] == -1)
+                        Console.Write('x');
+                    else
+                        Console.Write(map[y][x]);
+                    Console.Write(' ');
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            
         }
 
         public bool IsBusy(int row, int col) {
@@ -34,10 +49,11 @@ namespace hashcode
         }
 
         public bool IsSliceOverlapping(int row1, int col1, int row2, int col2) {
-            for (var y = row1; y < row2; ++y) {
-                for (var x = col1; x < col2; ++x) {
-                    if (map[y][x] != -1)
+            for (var y = row1; y <= row2; ++y) {
+                for (var x = col1; x <= col2; ++x) {
+                    if (map[y][x] != -1) {
                         return true;
+                    }
                 }
             }
             return false;
