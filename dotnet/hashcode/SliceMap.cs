@@ -5,10 +5,10 @@ namespace hashcode
     public class SliceMap {
         public int[][] map;
 
-        public SliceMap(int width, int height) {
-            map = new int[height][];
-            for (int i = 0; i < width; ++i) {
-                map[i] = new int[width];
+        public SliceMap(int rows, int columns) {
+            map = new int[rows][];
+            for (int i = 0; i < columns; ++i) {
+                map[i] = new int[columns];
                 Array.Fill(map[i], -1);
             }
         }
