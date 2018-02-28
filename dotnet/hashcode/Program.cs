@@ -5,50 +5,6 @@ using System.Linq;
 
 namespace hashcode
 {
-    public class Pizza
-    {
-        public int RowsCount { get; private set; }
-        public int ColsCount { get; private set; }
-
-        public List<List<char>> Grid { get; }
-        public List<Slice> Slices { get; } = new List<Slice>();
-
-        public Pizza(List<string> data)
-        {
-            RowsCount = data.Count;
-            ColsCount = data[0].Length;
-
-            Grid = new List<List<char>>();
-
-            foreach (var line in data)
-            {
-                var components = line.ToCharArray().ToList();
-                Grid.Add(components);
-            }
-        }
-    }
-
-    public class SliceType
-    {
-        public int RowsCount { get; set; }
-        public int ColsCount { get; set; }
-
-    }
-
-    public class Slice
-    {
-        public int Row1 { get; set; }
-        public int Row2 { get; set; }
-        public int Col1 { get; set; }
-        public int Col2 { get; set; }
-        public string Components { get; set; }
-
-        public string Print()
-        {
-            return $"From row {Row1} to {Row2} and col {Col1} to {Col2}. Components: {Components}";
-        }
-    }
-
     class Program
     {
         private static int minIngredients;
