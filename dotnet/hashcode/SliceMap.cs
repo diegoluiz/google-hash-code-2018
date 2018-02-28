@@ -22,22 +22,7 @@ namespace hashcode
                 for (var x = col1; x <= col2; ++x) {
                     map[y][x] = sliceIndex;
                 }
-            }
-
-            Log.Debug("");
-            Log.Debug($"Write bitmap values {row1} {col1} {row2} {col2} = {sliceIndex}. Bitmap now is:");
-            for (var y = 0; y < map.Length; ++y) {
-                for (var x = 0; x < map[y].Length; ++x) {
-                    if (map[y][x] == -1)
-                        Log.Debug("x");
-                    else
-                        Log.Debug(map[y][x].ToString());
-                    Log.Debug(" ");
-                }
-                Log.Debug("");
-            }
-            Log.Debug("");
-            
+            }         
         }
 
         public bool IsBusy(int row, int col) {
@@ -57,6 +42,26 @@ namespace hashcode
                 }
             }
             return false;
+        }
+
+        public void Print() {
+                        /*Console.WriteLine();
+            Console.WriteLine($"Write bitmap values {row1} {col1} {row2} {col2} = {sliceIndex}. Bitmap now is:");*/
+
+            Console.WriteLine();
+            Console.WriteLine("--------------- SLICEMAP ---------------");
+            for (var y = 0; y < map.Length; ++y) {
+                for (var x = 0; x < map[y].Length; ++x) {
+                    if (map[y][x] == -1)
+                        Console.Write('x');
+                    else
+                        Console.Write(map[y][x]);
+                    Console.Write(' ');
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("--------------- SLICEMAP ---------------");
+            Console.WriteLine();
         }
     }
 }

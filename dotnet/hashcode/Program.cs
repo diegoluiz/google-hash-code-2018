@@ -25,6 +25,11 @@ namespace hashcode
                 Context.maxItems = int.Parse(info[3]);
                 List<SliceType> sliceTypes = GetSliceTypes();
 
+
+                Console.WriteLine($"pizza with {pizza.RowsCount * pizza.ColsCount} cells");
+                Console.WriteLine($"MushroomCount={pizza.MushroomCount}");
+                Console.WriteLine($"TomatoCount={pizza.TomatoCount}");
+
                 foreach (var i in pizza.Grid)
                 {
                     Log.Debug(string.Join("", i));
@@ -92,8 +97,13 @@ namespace hashcode
                 }
             }
 
+<<<<<<< HEAD
             sliceTypes = sliceTypes.OrderByDescending(x => x.ColsCount * x.RowsCount).ToList();
             return sliceTypes;
+=======
+            PrintOutput(pizza);
+            sliceMap.Print();
+>>>>>>> 6d6194b81bcbe040fe52b8e938077a39f191bef8
         }
 
         private static void PrintOutput(Pizza pizza)

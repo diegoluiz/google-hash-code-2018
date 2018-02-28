@@ -24,5 +24,34 @@ namespace hashcode
                 Grid.Add(components);
             }
         }
+
+        public int MushroomCount { 
+            get 
+            {
+                return CountIngredients('M');
+            }
+        }
+
+        public int TomatoCount { 
+            get 
+            {
+                return CountIngredients('T');
+            }
+        }
+
+        private int CountIngredients(char ingredient) 
+        {
+            var count = 0;
+            foreach(var r in Grid)
+            {
+                foreach(var l in r) {
+                    if(l==ingredient) 
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
     }
 }
