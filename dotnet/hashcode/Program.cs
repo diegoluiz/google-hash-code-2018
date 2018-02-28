@@ -15,6 +15,9 @@ namespace hashcode
             var pizza = new Pizza(file.Skip(1).ToList());
             var sliceMap = new SliceMap(pizza.RowsCount, pizza.ColsCount);
 
+            Console.WriteLine($"pizza with {pizza.RowsCount*pizza.ColsCount} cells");
+            Console.WriteLine($"MushroomCount={pizza.MushroomCount}");
+
             Context.minIngredients = int.Parse(info[2]);
             Context.maxItems = int.Parse(info[3]);
 

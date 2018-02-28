@@ -24,5 +24,22 @@ namespace hashcode
                 Grid.Add(components);
             }
         }
+
+        public int MushroomCount { 
+            get 
+            {
+                var count = 0;
+                foreach(var r in Grid)
+                {
+                    foreach(var l in r) {
+                        if(l=='M') 
+                        {
+                            count++;
+                        }
+                    }
+                }
+                return count;
+            }
+        }
     }
 }
