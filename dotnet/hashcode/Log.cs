@@ -8,5 +8,11 @@ namespace hashcode
         {
             Console.WriteLine(string.Format(text, args));
         }
+
+        public static void Debug(string text, params object[] args)
+        {
+            if (false)
+                Console.WriteLine(string.Format(text, args));
+        }
     }
 }

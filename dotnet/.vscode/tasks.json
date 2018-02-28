@@ -18,7 +18,7 @@
                 "run",
                 "--project", 
                 "${workspaceFolder}/hashcode/hashcode.csproj",
-                "${workspaceFolder}/data/example.in"
+                "${workspaceFolder}/data"
             ],
             "problemMatcher": "$msCompile"
         }

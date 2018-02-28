@@ -26,14 +26,9 @@ namespace hashcode
             var uniqueSliceComponents = Components.GroupBy(x => x);
 
             if (uniqueSliceComponents.Count() != 2)
-            {
-                Log.Write($"Slice not valid {Print()}");
                 return false;
-            }
-
+                
             var validSlice = uniqueSliceComponents.All(x => x.Count() >= Context.minIngredients);
-            Log.Write($"Slice. {Print()}");
-
             return validSlice;
         }
     }

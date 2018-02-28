@@ -24,19 +24,19 @@ namespace hashcode
                 }
             }
 
-            Console.WriteLine();
-            Console.WriteLine($"Write bitmap values {row1} {col1} {row2} {col2} = {sliceIndex}. Bitmap now is:");
+            Log.Debug("");
+            Log.Debug($"Write bitmap values {row1} {col1} {row2} {col2} = {sliceIndex}. Bitmap now is:");
             for (var y = 0; y < map.Length; ++y) {
                 for (var x = 0; x < map[y].Length; ++x) {
                     if (map[y][x] == -1)
-                        Console.Write('x');
+                        Log.Debug("x");
                     else
-                        Console.Write(map[y][x]);
-                    Console.Write(' ');
+                        Log.Debug(map[y][x].ToString());
+                    Log.Debug(" ");
                 }
-                Console.WriteLine();
+                Log.Debug("");
             }
-            Console.WriteLine();
+            Log.Debug("");
             
         }
 
