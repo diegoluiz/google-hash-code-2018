@@ -11,6 +11,7 @@ namespace hashcode
         public int ColsCount { get; private set; }
 
         public List<List<string>> Grid { get; }
+        public List<Slice> Slices { get; } = new List<Slice>();
 
         public Pizza(List<string> data)
         {
@@ -29,23 +30,30 @@ namespace hashcode
         public int RowsCount { get; set; }
         public int ColsCount { get; set; }
 
-        // public int X1 { get; set; }
-        // public int X2 { get; set; }
-        // public int Y1 { get; set; }
-        // public int Y2 { get; set; }
+    }
+
+    public class Slice
+    {
+        public int Row1 { get; set; }
+        public int Row2 { get; set; }
+        public int Col1 { get; set; }
+        public int Col2 { get; set; }
     }
 
     class Program
     {
+        private static int minIngredients;
+        private static int maxItems;
+
         static void Main(string[] args)
         {
-            var filePath = args[0];
+            var filePath = args.Length >= 1 ? args[0] : "../data/example.in";
             var file = File.ReadAllLines(filePath);
             var info = file.First().Split(" ");
             var pizza = new Pizza(file.Skip(1).ToList());
 
-            var minIngredients = int.Parse(info[2]);
-            var maxItems = int.Parse(info[3]);
+            minIngredients = int.Parse(info[2]);
+            maxItems = int.Parse(info[3]);
 
             var sliceTypes = new List<SliceType>();
             for (var rows = 1; rows <= maxItems; rows++)
@@ -59,7 +67,7 @@ namespace hashcode
                 }
             }
 
-            sliceTypes.OrderByDescending(x => x.ColsCount * x.RowsCount);
+            sliceTypes = sliceTypes.OrderByDescending(x => x.ColsCount * x.RowsCount).ToList();
 
             foreach (var i in pizza.Grid)
             {
@@ -78,21 +86,40 @@ namespace hashcode
                     foreach (var sliceType in sliceTypes)
                     {
                         if (row + sliceType.RowsCount > pizza.RowsCount || col + sliceType.ColsCount > pizza.ColsCount)
-                        {
                             continue;
-                        }
 
-                        if (!IsValidSlice(row, col, pizza.Grid, minIngredients))
-                        {
+                        var slice = new Slice { Row1 = row, Row2 = row + sliceType.RowsCount - 1, Col1 = col, Col2 = col + sliceType.ColsCount - 1 };
 
-                        }
+                        if (!IsValidSlice(slice, pizza.Grid))
+                            continue;
 
+                        if (IsSliceOverLapping(pizza.Grid, slice))
+                            continue;
+
+                        pizza.Slices.Add(slice);
                     }
                 }
             }
         }
 
-        private static bool IsValidSlice(int row, int col, List<List<string>> grid, int minIngredients)
+        private static bool IsValidSlice(Slice slice, List<List<string>> grid)
+        {
+            var a = grid.Skip(slice.Row1)
+                .Take(slice.Row2 - slice.Row1)
+                .SelectMany(row =>
+                {
+                    return row.Skip(slice.Col1).Take(slice.Col2 - slice.Col1);
+                })
+                // .SelectMany(x => x.Split(""))
+                // .GroupBy(x => x)
+                ;
+
+
+
+            throw new NotImplementedException();
+        }
+
+        private static bool IsSliceOverLapping(List<List<string>> grid, Slice slice)
         {
             throw new NotImplementedException();
         }
