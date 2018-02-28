@@ -9,7 +9,7 @@ namespace hashcode
     {
         static void Main(string[] args)
         {
-            var filePath = args.Length >= 1 ? args[0] : "../data/example.in";
+            var filePath = args.Length >= 1 ? args[0] : "../data/small.in";
             var file = File.ReadAllLines(filePath);
             var info = file.First().Split(" ");
             var pizza = new Pizza(file.Skip(1).ToList());
@@ -87,6 +87,7 @@ namespace hashcode
             }
 
             PrintOutput(pizza);
+            sliceMap.Print();
         }
 
         private static void PrintOutput(Pizza pizza)
