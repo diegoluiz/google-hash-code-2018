@@ -80,14 +80,14 @@ namespace hashcode
                 Console.WriteLine(string.Join("", i));
             }
 
-            foreach (var i in sliceTypes)
-            {
-                Console.WriteLine($"{i.RowsCount} - {i.ColsCount}");
-            }
+            // foreach (var i in sliceTypes)
+            // {
+            //     Console.WriteLine($"{i.RowsCount} - {i.ColsCount}");
+            // }
 
-            for (var row = 0; row < pizza.Grid.Count; row++)
+            for (var row = 0; row < pizza.RowsCount; row++)
             {
-                for (var col = 0; col < row; col++)
+                for (var col = 0; col < pizza.ColsCount; col++)
                 {
                     foreach (var sliceType in sliceTypes)
                     {
@@ -95,16 +95,21 @@ namespace hashcode
                             continue;
 
                         var row1 = row;
-                        var row2 = row + sliceType.RowsCount - 1;
+                        var row2 = row + sliceType.RowsCount;
                         var col1 = col;
-                        var col2 = col + sliceType.ColsCount - 1;
+                        var col2 = col + sliceType.ColsCount;
 
+                        var a = "";
+                        for (var c = row; c < row2; c++)
+                        {
+var b = pizza.Grid[c];
+                        }
                         var slice = new Slice
                         {
                             Row1 = row1,
-                            Row2 = row2,
+                            Row2 = row2 - 1,
                             Col1 = col1,
-                            Col2 = col2,
+                            Col2 = col2 - 1,
                             Components = pizza.Grid.Skip(row)
                                             .Take(row2 - row1)
                                             .SelectMany(x => x.Skip(col1).Take(col2 - col1))
@@ -130,18 +135,13 @@ namespace hashcode
             if (uniqueSliceComponents.Count() != 2)
             {
                 Console.WriteLine($"Slice not valid {slice.Print()}");
+                return false;
             }
 
-            var validSlice = uniqueSliceComponents.Select(x => new { item = x.Key, count = x.Count() })
-                            .All(x => (x.item == 'M' || x.item == 'T') || x.count >= minIngredients);
+            var validSlice = uniqueSliceComponents.All(x => x.Count() >= minIngredients);
+            Console.WriteLine($"Slice. {slice.Print()}");
 
-            if (validSlice)
-            {
-                Console.WriteLine($"Valid slice. {slice.Print()}");
-            }
-            // var b = a.Split("");
-
-            throw new NotImplementedException();
+            return validSlice;
         }
 
         private static bool IsSliceOverLapping(List<List<string>> grid, Slice slice)
