@@ -7,9 +7,6 @@ namespace hashcode
 {
     class Program
     {
-        private static int minIngredients;
-        private static int maxItems;
-
         static void Main(string[] args)
         {
             var filePath = args.Length >= 1 ? args[0] : "../data/example.in";
@@ -17,15 +14,15 @@ namespace hashcode
             var info = file.First().Split(" ");
             var pizza = new Pizza(file.Skip(1).ToList());
 
-            minIngredients = int.Parse(info[2]);
-            maxItems = int.Parse(info[3]);
+            Context.minIngredients = int.Parse(info[2]);
+            Context.maxItems = int.Parse(info[3]);
 
             var sliceTypes = new List<SliceType>();
-            for (var rows = 1; rows <= maxItems; rows++)
+            for (var rows = 1; rows <= Context.maxItems; rows++)
             {
-                for (var cols = 1; cols <= maxItems; cols++)
+                for (var cols = 1; cols <= Context.maxItems; cols++)
                 {
-                    if (rows * cols > 1 && rows * cols <= maxItems)
+                    if (rows * cols > 1 && rows * cols <= Context.maxItems)
                     {
                         sliceTypes.Add(new SliceType { RowsCount = rows, ColsCount = cols });
                     }
@@ -36,12 +33,12 @@ namespace hashcode
 
             foreach (var i in pizza.Grid)
             {
-                Console.WriteLine(string.Join("", i));
+                Log.Write(string.Join("", i));
             }
 
             // foreach (var i in sliceTypes)
             // {
-            //     Console.WriteLine($"{i.RowsCount} - {i.ColsCount}");
+            //     Log.Write($"{i.RowsCount} - {i.ColsCount}");
             // }
 
             for (var row = 0; row < pizza.RowsCount; row++)
@@ -75,7 +72,7 @@ namespace hashcode
                             Components = components
                         };
 
-                        if (!IsValidSlice(slice))
+                        if (!slice.IsValidSlice())
                             continue;
 
                         if (IsSliceOverLapping(pizza.Grid, slice))
@@ -85,22 +82,6 @@ namespace hashcode
                     }
                 }
             }
-        }
-
-        private static bool IsValidSlice(Slice slice)
-        {
-            var uniqueSliceComponents = slice.Components.ToCharArray().GroupBy(x => x);
-
-            if (uniqueSliceComponents.Count() != 2)
-            {
-                Console.WriteLine($"Slice not valid {slice.Print()}");
-                return false;
-            }
-
-            var validSlice = uniqueSliceComponents.All(x => x.Count() >= minIngredients);
-            Console.WriteLine($"Slice. {slice.Print()}");
-
-            return validSlice;
         }
 
         private static bool IsSliceOverLapping(List<List<char>> grid, Slice slice)
