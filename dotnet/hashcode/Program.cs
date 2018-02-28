@@ -38,6 +38,12 @@ namespace hashcode
         public int Row2 { get; set; }
         public int Col1 { get; set; }
         public int Col2 { get; set; }
+        public string Components { get; set; }
+
+        public string Print()
+        {
+            return $"From row {Row1} to {Row2} and col {Col1} to {Col2}. Components: {Components}";
+        }
     }
 
     class Program
@@ -88,9 +94,24 @@ namespace hashcode
                         if (row + sliceType.RowsCount > pizza.RowsCount || col + sliceType.ColsCount > pizza.ColsCount)
                             continue;
 
-                        var slice = new Slice { Row1 = row, Row2 = row + sliceType.RowsCount - 1, Col1 = col, Col2 = col + sliceType.ColsCount - 1 };
+                        var row1 = row;
+                        var row2 = row + sliceType.RowsCount - 1;
+                        var col1 = col;
+                        var col2 = col + sliceType.ColsCount - 1;
 
-                        if (!IsValidSlice(slice, pizza.Grid))
+                        var slice = new Slice
+                        {
+                            Row1 = row1,
+                            Row2 = row2,
+                            Col1 = col1,
+                            Col2 = col2,
+                            Components = pizza.Grid.Skip(row)
+                                            .Take(row2 - row1)
+                                            .SelectMany(x => x.Skip(col1).Take(col2 - col1))
+                                            .Aggregate((cur, next) => cur + next)
+                        };
+
+                        if (!IsValidSlice(slice))
                             continue;
 
                         if (IsSliceOverLapping(pizza.Grid, slice))
@@ -102,19 +123,23 @@ namespace hashcode
             }
         }
 
-        private static bool IsValidSlice(Slice slice, List<List<string>> grid)
+        private static bool IsValidSlice(Slice slice)
         {
-            var a = grid.Skip(slice.Row1)
-                .Take(slice.Row2 - slice.Row1)
-                .SelectMany(row =>
-                {
-                    return row.Skip(slice.Col1).Take(slice.Col2 - slice.Col1);
-                })
-                // .SelectMany(x => x.Split(""))
-                // .GroupBy(x => x)
-                ;
+            var uniqueSliceComponents = slice.Components.ToCharArray().GroupBy(x => x);
 
+            if (uniqueSliceComponents.Count() != 2)
+            {
+                Console.WriteLine($"Slice not valid {slice.Print()}");
+            }
 
+            var validSlice = uniqueSliceComponents.Select(x => new { item = x.Key, count = x.Count() })
+                            .All(x => (x.item == 'M' || x.item == 'T') || x.count >= minIngredients);
+
+            if (validSlice)
+            {
+                Console.WriteLine($"Valid slice. {slice.Print()}");
+            }
+            // var b = a.Split("");
 
             throw new NotImplementedException();
         }
