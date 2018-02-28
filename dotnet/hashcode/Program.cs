@@ -55,12 +55,12 @@ namespace hashcode
                         var row2 = row + sliceType.RowsCount;
                         var col1 = col;
                         var col2 = col + sliceType.ColsCount;
-                        var components = "";
+                        var components = new List<char>();
                         for (var c = row; c < row2; c++)
                         {
                             for (var d = col; d < col2; d++)
                             {
-                                components += pizza.Grid[c][d];
+                                components.Add(pizza.Grid[c][d]);
                             }
                         }
 
