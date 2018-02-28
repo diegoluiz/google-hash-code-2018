@@ -85,6 +85,22 @@ namespace hashcode
                     }
                 }
             }
+
+            PrintOutput(pizza);
+        }
+
+        private static void PrintOutput(Pizza pizza)
+        {
+            Log.Write("--------------- OUTPUT ---------------");
+
+            Log.Write(pizza.Slices.Count.ToString());
+
+            foreach (var slice in pizza.Slices)
+            {
+                Log.Write("{0} {1} {2} {3}", slice.Row1, slice.Row2, slice.Col1, slice.Col2);
+            }
+
+            Log.Write("--------------- OUTPUT ---------------");
         }
     }
 }
