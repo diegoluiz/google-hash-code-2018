@@ -48,8 +48,8 @@ namespace hashcode
                         /*Console.WriteLine();
             Console.WriteLine($"Write bitmap values {row1} {col1} {row2} {col2} = {sliceIndex}. Bitmap now is:");*/
 
-            Console.WriteLine();
-            Console.WriteLine("--------------- SLICEMAP ---------------");
+            Log.Debug();
+            Log.Debug("--------------- SLICEMAP ---------------");
             for (var y = 0; y < map.Length; ++y) {
                 for (var x = 0; x < map[y].Length; ++x) {
                     if (map[y][x] == -1)
@@ -58,10 +58,10 @@ namespace hashcode
                         Console.Write(map[y][x]);
                     Console.Write(' ');
                 }
-                Console.WriteLine();
+                Log.Debug();
             }
-            Console.WriteLine("--------------- SLICEMAP ---------------");
-            Console.WriteLine();
+            Log.Debug("--------------- SLICEMAP ---------------");
+            Log.Debug();
         }
     }
 }
