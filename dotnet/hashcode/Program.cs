@@ -97,13 +97,8 @@ namespace hashcode
                 }
             }
 
-<<<<<<< HEAD
             sliceTypes = sliceTypes.OrderByDescending(x => x.ColsCount * x.RowsCount).ToList();
             return sliceTypes;
-=======
-            PrintOutput(pizza);
-            sliceMap.Print();
->>>>>>> 6d6194b81bcbe040fe52b8e938077a39f191bef8
         }
 
         private static void PrintOutput(Pizza pizza)
