@@ -10,7 +10,7 @@ namespace hashcode
         public int RowsCount { get; private set; }
         public int ColsCount { get; private set; }
 
-        public List<List<string>> Grid { get; }
+        public List<List<char>> Grid { get; }
         public List<Slice> Slices { get; } = new List<Slice>();
 
         public Pizza(List<string> data)
@@ -18,10 +18,13 @@ namespace hashcode
             RowsCount = data.Count;
             ColsCount = data[0].Length;
 
-            Grid = data.Select(l =>
+            Grid = new List<List<char>>();
+
+            foreach (var line in data)
             {
-                return new List<string>(l.Split(""));
-            }).ToList();
+                var components = line.ToCharArray().ToList();
+                Grid.Add(components);
+            }
         }
     }
 
@@ -98,22 +101,22 @@ namespace hashcode
                         var row2 = row + sliceType.RowsCount;
                         var col1 = col;
                         var col2 = col + sliceType.ColsCount;
-
-                        var a = "";
+                        var components = "";
                         for (var c = row; c < row2; c++)
                         {
-var b = pizza.Grid[c];
+                            for (var d = col; d < col2; d++)
+                            {
+                                components += pizza.Grid[c][d];
+                            }
                         }
+
                         var slice = new Slice
                         {
                             Row1 = row1,
                             Row2 = row2 - 1,
                             Col1 = col1,
                             Col2 = col2 - 1,
-                            Components = pizza.Grid.Skip(row)
-                                            .Take(row2 - row1)
-                                            .SelectMany(x => x.Skip(col1).Take(col2 - col1))
-                                            .Aggregate((cur, next) => cur + next)
+                            Components = components
                         };
 
                         if (!IsValidSlice(slice))
@@ -144,7 +147,7 @@ var b = pizza.Grid[c];
             return validSlice;
         }
 
-        private static bool IsSliceOverLapping(List<List<string>> grid, Slice slice)
+        private static bool IsSliceOverLapping(List<List<char>> grid, Slice slice)
         {
             throw new NotImplementedException();
         }
