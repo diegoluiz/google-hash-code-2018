@@ -13,6 +13,7 @@ namespace hashcode
             var file = File.ReadAllLines(filePath);
             var info = file.First().Split(" ");
             var pizza = new Pizza(file.Skip(1).ToList());
+            var sliceMap = new SliceMap(pizza.RowsCount, pizza.ColsCount);
 
             Context.minIngredients = int.Parse(info[2]);
             Context.maxItems = int.Parse(info[3]);
@@ -75,18 +76,15 @@ namespace hashcode
                         if (!slice.IsValidSlice())
                             continue;
 
-                        if (IsSliceOverLapping(pizza.Grid, slice))
+                        if (sliceMap.IsSliceOverlapping(slice))
                             continue;
 
+                        var sliceIndex = pizza.Slices.Count;
                         pizza.Slices.Add(slice);
+                        sliceMap.Write(slice, sliceIndex);
                     }
                 }
             }
-        }
-
-        private static bool IsSliceOverLapping(List<List<char>> grid, Slice slice)
-        {
-            throw new NotImplementedException();
         }
     }
 }

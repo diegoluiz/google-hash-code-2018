@@ -7,7 +7,7 @@ namespace hashcode
 
         public SliceMap(int rows, int columns) {
             map = new int[rows][];
-            for (int i = 0; i < columns; ++i) {
+            for (int i = 0; i < rows; ++i) {
                 map[i] = new int[columns];
                 Array.Fill(map[i], -1);
             }
@@ -18,8 +18,8 @@ namespace hashcode
         }
 
         public void Write(int row1, int col1, int row2, int col2, int sliceIndex) {
-            for (var y = row1; y <= row2; ++y) {
-                for (var x = col1; x <= col2; ++x) {
+            for (var y = row1; y < row2; ++y) {
+                for (var x = col1; x < col2; ++x) {
                     map[y][x] = sliceIndex;
                 }
             }
@@ -34,8 +34,8 @@ namespace hashcode
         }
 
         public bool IsSliceOverlapping(int row1, int col1, int row2, int col2) {
-            for (var y = row1; y <= row2; ++y) {
-                for (var x = col1; x <= col2; ++x) {
+            for (var y = row1; y < row2; ++y) {
+                for (var x = col1; x < col2; ++x) {
                     if (map[y][x] != -1)
                         return true;
                 }
