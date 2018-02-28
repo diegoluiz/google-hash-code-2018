@@ -72,7 +72,7 @@ namespace hashcode
                             Components = components
                         };
 
-                        if (!IsValidSlice(slice))
+                        if (!slice.IsValidSlice())
                             continue;
 
                         if (IsSliceOverLapping(pizza.Grid, slice))
@@ -82,22 +82,6 @@ namespace hashcode
                     }
                 }
             }
-        }
-
-        private static bool IsValidSlice(Slice slice)
-        {
-            var uniqueSliceComponents = slice.Components.ToCharArray().GroupBy(x => x);
-
-            if (uniqueSliceComponents.Count() != 2)
-            {
-                Log.Write($"Slice not valid {slice.Print()}");
-                return false;
-            }
-
-            var validSlice = uniqueSliceComponents.All(x => x.Count() >= Context.minIngredients);
-            Log.Write($"Slice. {slice.Print()}");
-
-            return validSlice;
         }
 
         private static bool IsSliceOverLapping(List<List<char>> grid, Slice slice)
