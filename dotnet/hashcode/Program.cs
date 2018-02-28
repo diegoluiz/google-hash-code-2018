@@ -17,6 +17,7 @@ namespace hashcode
 
             Console.WriteLine($"pizza with {pizza.RowsCount*pizza.ColsCount} cells");
             Console.WriteLine($"MushroomCount={pizza.MushroomCount}");
+            Console.WriteLine($"TomatoCount={pizza.TomatoCount}");
 
             Context.minIngredients = int.Parse(info[2]);
             Context.maxItems = int.Parse(info[3]);

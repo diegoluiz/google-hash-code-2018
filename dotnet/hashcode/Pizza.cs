@@ -28,18 +28,30 @@ namespace hashcode
         public int MushroomCount { 
             get 
             {
-                var count = 0;
-                foreach(var r in Grid)
-                {
-                    foreach(var l in r) {
-                        if(l=='M') 
-                        {
-                            count++;
-                        }
+                return CountIngredients('M');
+            }
+        }
+
+        public int TomatoCount { 
+            get 
+            {
+                return CountIngredients('T');
+            }
+        }
+
+        private int CountIngredients(char ingredient) 
+        {
+            var count = 0;
+            foreach(var r in Grid)
+            {
+                foreach(var l in r) {
+                    if(l==ingredient) 
+                    {
+                        count++;
                     }
                 }
-                return count;
             }
+            return count;
         }
     }
 }
