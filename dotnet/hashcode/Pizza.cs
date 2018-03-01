@@ -25,45 +25,33 @@ namespace hashcode
             }
         }
 
-        public int MushroomCount
-        {
-            get
+        public int MushroomCount { 
+            get 
             {
                 return CountIngredients('M');
             }
         }
 
-        public int TomatoCount
-        {
-            get
+        public int TomatoCount { 
+            get 
             {
                 return CountIngredients('T');
             }
         }
 
-        private int CountIngredients(char ingredient)
+        private int CountIngredients(char ingredient) 
         {
             var count = 0;
-            foreach (var r in Grid)
+            foreach(var r in Grid)
             {
-                foreach (var l in r)
-                {
-                    if (l == ingredient)
+                foreach(var l in r) {
+                    if(l==ingredient) 
                     {
                         count++;
                     }
                 }
             }
             return count;
-        }
-
-        public void Print()
-        {
-            Log.Debug("Pizza grid:");
-            foreach (var i in Grid)
-            {
-                Log.Debug(string.Join("", i));
-            }
         }
     }
 }
