@@ -16,9 +16,11 @@ namespace hashcode
         public int Col2 { get; set; }
         public List<char> Components { get; set; }
 
+        public int Size => (Row2 - Row1 + 1) * (Col2 - Col1 + 1);
+
         public string Print()
         {
-            return $"From row {Row1} to {Row2} and col {Col1} to {Col2}. Components: {string.Join("", Components)}";
+            return $"From row {Row1} to {Row2} and col {Col1} to {Col2}. Area {Size}. Components: {string.Join("", Components)}";
         }
         
         public bool IsValidSlice()
