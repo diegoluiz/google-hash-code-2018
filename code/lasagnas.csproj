@@ -8,8 +8,6 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>lasagnas</AssemblyName>
     <IsPackable>false</IsPackable>
-    <SynchReleaseVersion>false</SynchReleaseVersion>
-    <Deterministic>false</Deterministic>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
