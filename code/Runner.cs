@@ -95,26 +95,24 @@ namespace lasagnas {
         cars.Add (new Car (i));
       }
 
-      var rides = new List<Ride> ();
+      var ridePool = new RidePool ();
       var count = 0;
       foreach (var c in InputData.Items) {
-        rides.Add (new Ride (count++, c.StartRow, c.StartColumn, c.FinishRow, c.FinishColumn, c.EarlierStart, c.LatestFinish));
+        ridePool.AddRide (new Ride (count++, c.StartRow, c.StartColumn, c.FinishRow, c.FinishColumn, c.EarlierStart, c.LatestFinish));
       }
-
-      rides = rides.OrderBy (x => x.EarlierStart).ToList ();
 
       for (var tick = 0; tick < InputData.Steps; tick++) {
         foreach (var car in cars) {
           if (!car.IsFree (tick)) continue;
 
-          var ride = rides.FirstOrDefault (x => !x.Assigned);
+          var ride = ridePool.GetBestRideFor (car);
           if (ride != null) {
             car.Assign (ride, tick);
           }
         }
       }
 
-      Log.Write ($"Cars {cars.Count} Rides {rides.Count}");
+      Log.Write ($"Cars {cars.Count} Rides {ridePool.CountRide}");
       PrintOutput (cars);
     }
 
