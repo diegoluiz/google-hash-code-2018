@@ -10,9 +10,11 @@ namespace lasagnas {
   public class Runner {
 
     public readonly InputFile Input;
+    public readonly ProblemInputData InputData;
 
     public Runner(InputFile input) {
       this.Input = input;
+      this.InputData = input.InputData;
     }
 
     public void Run() {
