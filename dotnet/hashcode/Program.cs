@@ -17,7 +17,6 @@ namespace hashcode
             {
                 Log.Write("Processing file {0}", filePath);
                 var outputFilePath = filePath.Replace(".in", ".out");
-                // var filePath = args.Length >= 1 ? args[0] : "../data/example.in";
                 var file = File.ReadAllLines(filePath);
                 var info = file.First().Split(" ");
                 var pizza = new Pizza(file.Skip(1).ToList());
@@ -28,9 +27,9 @@ namespace hashcode
                 List<SliceType> sliceTypes = GetSliceTypes();
 
 
-                Console.WriteLine($"pizza with {pizza.RowsCount * pizza.ColsCount} cells");
-                Console.WriteLine($"MushroomCount={pizza.MushroomCount}");
-                Console.WriteLine($"TomatoCount={pizza.TomatoCount}");
+                Log.Write($"pizza with {pizza.RowsCount * pizza.ColsCount} cells");
+                Log.Write($"MushroomCount={pizza.MushroomCount}");
+                Log.Write($"TomatoCount={pizza.TomatoCount}");
 
                 foreach (var i in pizza.Grid)
                 {
@@ -106,7 +105,7 @@ namespace hashcode
         private static void PrintOutput(Pizza pizza, string filepath)
         {
             var sb = "";
-            Log.Write("--------------- OUTPUT ---------------");
+            Log.Debug("--------------- OUTPUT ---------------");
 
             sb += pizza.Slices.Count.ToString() + Environment.NewLine;
 
@@ -115,8 +114,8 @@ namespace hashcode
                 sb += string.Format("{0} {1} {2} {3}", slice.Row1, slice.Col1, slice.Row2, slice.Col2) + Environment.NewLine;
             }
 
-            Log.Write(sb);
-            Log.Write("--------------- OUTPUT ---------------");
+            Log.Debug(sb);
+            Log.Debug("--------------- OUTPUT ---------------");
 
             File.WriteAllText(filepath, sb);
         }
