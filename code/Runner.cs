@@ -81,6 +81,20 @@ namespace lasagnas {
 
   public class Runner {
 
+    private static Random rng = new Random();
+
+    public static void Shuffle<T>(IList<T> list)  
+    {  
+        int n = list.Count;  
+        while (n > 1) {  
+            n--;  
+            int k = rng.Next(n + 1);  
+            T value = list[k];  
+            list[k] = list[n];  
+            list[n] = value;  
+        }  
+    }
+
     public readonly InputFile Input;
     public readonly ProblemInputData InputData;
 
@@ -112,6 +126,8 @@ namespace lasagnas {
           checkpoint = DateTime.Now.AddSeconds (30);
           Log.Write ($"Checkpoint [{checkpoint.Ticks}] tick {tick}");
         }
+
+        Shuffle(cars);
 
         foreach (var car in cars) {
           if (!car.IsFree (tick)) continue;
