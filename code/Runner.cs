@@ -23,7 +23,6 @@ namespace lasagnas {
     }
 
     public void Assign(Ride ride, int tick) {
-      ride.Assigned = true;
       Rides.Add(ride);
       _nextFreeTick = tick + CurrentPosition.GetDistance(ride.Start) + ride.Distance;
       CurrentPosition = ride.End;
@@ -52,6 +51,10 @@ namespace lasagnas {
   }
 
   public class Ride {
+
+    public Ride FreePrev;
+    public Ride FreeNext;
+
 
     public Intersection Start { get; } = new Intersection();
     public Intersection End { get; } = new Intersection();
@@ -108,6 +111,7 @@ namespace lasagnas {
           var ride = ridePool.GetBestRideFor(car);
           if (ride != null) {
             car.Assign(ride, tick);
+            ridePool.RemoveFree(ride);
           }
         }
       }
