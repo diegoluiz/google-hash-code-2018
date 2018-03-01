@@ -68,7 +68,7 @@ namespace lasagnas {
       for (var ride = _freeFirst; ride != null; ride = ride.FreeNext) {
         var distanceFromStartingPoint = car.CurrentPosition.GetDistance (ride.Start);
 
-        if(ride.EarlierStart - tick > 50){
+        if(ride.EarlierStart - tick > 100){
           break;
         }
 
