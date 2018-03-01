@@ -9,17 +9,25 @@ using System.Threading;
 namespace lasagnas {
 
   public class Car {
+    private int _nextFreeTick;
+
     public int Id { get; set; }
     public List<Ride> Rides { get; set; } = new List<Ride> ();
     public Intersection CurrentPosition { get; private set; } = new Intersection ();
+    public bool IsFree (int tick) {
+      return tick >= _nextFreeTick;
+    }
 
     public Car (int id) {
       Id = id;
     }
 
-    internal void Assign (Ride ride) {
+    public void Assign (Ride ride, int tick) {
       ride.Assigned = true;
-      throw new NotImplementedException ();
+      Rides.Add (ride);
+      _nextFreeTick = tick + CurrentPosition.GetDistance (ride.Start) + ride.Distance;
+      CurrentPosition = ride.End;
+      Log.Debug ("Car {0} Ride {1}", Id, ride.Id);
     }
   }
 
@@ -37,6 +45,10 @@ namespace lasagnas {
   public class Intersection {
     public int Row { get; set; }
     public int Col { get; set; }
+
+    internal int GetDistance (Intersection start) {
+      return Math.Abs (Row - start.Row) + Math.Abs (Col - start.Col);
+    }
   }
 
   public class Ride {
@@ -95,28 +107,33 @@ namespace lasagnas {
         foreach (var car in cars) {
           if (!car.IsFree (tick)) continue;
 
-          var ride = rides.First (x => !x.Assigned);
-          car.Assign (ride);
+          var ride = rides.FirstOrDefault (x => !x.Assigned);
+          if (ride != null) {
+            car.Assign (ride, tick);
+          }
         }
       }
 
       Log.Write ($"Cars {cars.Count} Rides {rides.Count}");
-      PrintOutput ();
+      PrintOutput (cars);
     }
 
-    private void PrintOutput () {
+    private void PrintOutput (List<Car> cars) {
       var sb = new StringBuilder ();
 
-      //sb.AppendLine(pizza.Slices.Count.ToString());
-      //foreach (var slice in pizza.Slices) {
-      //  sb.AppendLine(string.Format("{0} {1} {2} {3}", slice.Row1, slice.Col1, slice.Row2, slice.Col2));
-      //}
+      foreach (var car in cars) {
+        sb.Append (string.Format (car.Rides.Count.ToString ()));
+        foreach (var ride in car.Rides) {
+          sb.Append (" " + ride.Id);
+        }
+        sb.Append ("\n");
+      }
 
       var text = sb.ToString ();
 
-      //Log.Debug("--------------- OUTPUT ---------------");
-      //Log.Debug(text);
-      //Log.Debug("--------------- OUTPUT ---------------");
+      Log.Debug ("--------------- OUTPUT ---------------");
+      Log.Debug (text);
+      Log.Debug ("--------------- OUTPUT ---------------");
 
       Input.WriteOutput (text);
     }
