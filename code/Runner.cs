@@ -104,6 +104,10 @@ namespace lasagnas {
       rides = rides.OrderBy (x => x.EarlierStart).ToList ();
 
       for (var tick = 0; tick < InputData.Steps; tick++) {
+
+        if ((tick % 10000) == 0)
+          Log.Write($"tick {tick}");
+
         foreach (var car in cars) {
           if (!car.IsFree (tick)) continue;
 
