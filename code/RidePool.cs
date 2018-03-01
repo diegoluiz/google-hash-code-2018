@@ -9,12 +9,13 @@ using System.Threading;
 namespace lasagnas {
   public class RidePool {
 
+    private int _bonusPoints;
     private Ride[] _rides;
 
     private Ride _freeFirst;
     private Ride _freeLast;
 
-    private void AddFree(Ride ride) {
+    private void AddFree (Ride ride) {
       if (_freeLast != null) {
         ride.FreePrev = _freeLast;
         _freeLast.FreeNext = ride;
@@ -24,7 +25,7 @@ namespace lasagnas {
       _freeLast = ride;
     }
 
-    public void RemoveFree(Ride ride) {
+    public void RemoveFree (Ride ride) {
       if (ride.Assigned)
         return;
       ride.Assigned = true;
@@ -42,35 +43,57 @@ namespace lasagnas {
       }
     }
 
-    public RidePool(List<InputRow> rows) {
+    public RidePool (List<InputRow> rows, int bonusPoints = 0) {
+      _bonusPoints = bonusPoints;
       var rides = new Ride[rows.Count];
       for (var i = 0; i < rides.Length; ++i) {
         var c = rows[i];
-        rides[i] = new Ride(i, c.StartRow, c.StartColumn, c.FinishRow, c.FinishColumn, c.EarlierStart, c.LatestFinish);
+        rides[i] = new Ride (i, c.StartRow, c.StartColumn, c.FinishRow, c.FinishColumn, c.EarlierStart, c.LatestFinish);
       }
-      Array.Sort(rides, (a, b) => a.EarlierStart - b.EarlierStart);
+      Array.Sort (rides, (a, b) => a.EarlierStart - b.EarlierStart);
       this._rides = rides;
       foreach (var ride in rides)
-        AddFree(ride);
+        AddFree (ride);
     }
 
     public int CountRide =>
       _rides.Length;
 
-    public Ride GetBestRideFor(Car car) {
+    public Ride GetBestRideFor (Car car, int tick) {
       //var availableRides = _rides.Where(x => !x.Assigned);
 
       var minDistance = int.MaxValue;
-      Ride closestRideToCar = null;
+      var a = new List<Ride> ();
+      // Ride closestRideToCar = null;
       for (var ride = _freeFirst; ride != null; ride = ride.FreeNext) {
-        var distanceFromStartingPoint = car.CurrentPosition.GetDistance(ride.Start);
+        var distanceFromStartingPoint = car.CurrentPosition.GetDistance (ride.Start);
+
+        if(ride.EarlierStart - tick > 50){
+          break;
+        }
+
+        if(tick + distanceFromStartingPoint + ride.Distance > ride.LatestFinish) {
+          continue;
+        }
+
         if (minDistance > distanceFromStartingPoint) {
           minDistance = distanceFromStartingPoint;
-          closestRideToCar = ride;
+          // closestRideToCar = ride;
+          a = new List<Ride> ();
+          a.Add (ride);
+        } 
+        else if (minDistance == distanceFromStartingPoint) {
+          a.Add (ride);
         }
-      }
 
-      return closestRideToCar;
+      }
+      var z =  a
+        .Where (x => x.EarlierStart >= tick + minDistance)
+        .OrderBy (x => x.EarlierStart).FirstOrDefault ();
+
+      return z ?? a.OrderByDescending (x => x.EarlierStart).FirstOrDefault ();
+
+      // return closestRideToCar;
     }
   }
 }
