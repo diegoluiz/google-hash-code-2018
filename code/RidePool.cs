@@ -15,6 +15,7 @@ namespace lasagnas {
 
     public void AddRide (Ride ride) {
       _rides.Add (ride);
+      _rides = _rides.OrderBy (x => x.EarlierStart).ToList ();
     }
 
     public int CountRide {
@@ -24,9 +25,19 @@ namespace lasagnas {
     }
 
     public Ride GetBestRideFor (Car car) {
-      return _rides
-        .OrderBy (x => x.EarlierStart)
-        .FirstOrDefault (x => !x.Assigned);
+      var availableRides = _rides.Where (x => !x.Assigned);
+
+      var minDistance = int.MaxValue;
+      Ride closestRideToCar = null;
+      foreach (var ride in availableRides) {
+        var distanceFromStartingPoint = car.CurrentPosition.GetDistance (ride.Start);
+        if (minDistance > distanceFromStartingPoint) {
+          minDistance = distanceFromStartingPoint;
+          closestRideToCar = ride;
+        }
+      }
+
+      return closestRideToCar;
     }
   }
 }
