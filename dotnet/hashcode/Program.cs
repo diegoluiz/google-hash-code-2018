@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace hashcode
 {
@@ -10,11 +11,12 @@ namespace hashcode
         static void Main(string[] args)
         {
             var path = args.Length >= 1 ? args[0] : "../data/";
-            var files = Directory.GetFiles(path);
+            var files = Directory.GetFiles(path, "*.in");
 
             foreach (var filePath in files)
             {
                 Log.Write("Processing file {0}", filePath);
+                var outputFilePath = filePath.Replace(".in", ".out");
                 // var filePath = args.Length >= 1 ? args[0] : "../data/example.in";
                 var file = File.ReadAllLines(filePath);
                 var info = file.First().Split(" ");
@@ -78,8 +80,8 @@ namespace hashcode
                         }
                     }
                 }
-
-                PrintOutput(pizza);
+                sliceMap.Print();
+                PrintOutput(pizza, outputFilePath);
             }
         }
 
@@ -101,18 +103,22 @@ namespace hashcode
             return sliceTypes;
         }
 
-        private static void PrintOutput(Pizza pizza)
+        private static void PrintOutput(Pizza pizza, string filepath)
         {
+            var sb = "";
             Log.Write("--------------- OUTPUT ---------------");
 
-            Log.Write(pizza.Slices.Count.ToString());
+            sb += pizza.Slices.Count.ToString() + Environment.NewLine;
 
             foreach (var slice in pizza.Slices)
             {
-                Log.Write("{0} {1} {2} {3}", slice.Row1, slice.Col1, slice.Row2, slice.Col2);
+                sb += string.Format("{0} {1} {2} {3}", slice.Row1, slice.Col1, slice.Row2, slice.Col2) + Environment.NewLine;
             }
 
+            Log.Write(sb);
             Log.Write("--------------- OUTPUT ---------------");
+
+            File.WriteAllText(filepath, sb);
         }
     }
 }
