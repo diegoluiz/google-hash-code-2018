@@ -51,10 +51,8 @@ namespace lasagnas {
   }
 
   public class Ride {
-
     public Ride FreePrev;
     public Ride FreeNext;
-
 
     public Intersection Start { get; } = new Intersection();
     public Intersection End { get; } = new Intersection();
@@ -92,6 +90,8 @@ namespace lasagnas {
     }
 
     public void Run() {
+      var checkpoint = DateTime.Now.AddSeconds(30);
+
       Console.WriteLine($"* Running {Input.Name}");
 
       var cars = new List<Car>();
@@ -100,10 +100,18 @@ namespace lasagnas {
       }
 
       var ridePool = new RidePool(InputData.Items);
+
+      Log.Write($"Cars {cars.Count} Rides {ridePool.CountRide}");
+
       for (var tick = 0; tick < InputData.Steps; tick++) {
 
         if ((tick % 10000) == 0)
           Log.Write($"tick {tick}");
+
+        if (checkpoint.Ticks < DateTime.Now.Ticks) {
+          checkpoint = DateTime.Now.AddSeconds(30);
+          Log.Write($"Checkpoint [{checkpoint.Ticks}] tick {tick}");
+        }
 
         foreach (var car in cars) {
           if (!car.IsFree(tick)) continue;
@@ -116,7 +124,7 @@ namespace lasagnas {
         }
       }
 
-      Log.Write($"Cars {cars.Count} Rides {ridePool.CountRide}");
+      Log.Write($"Finished.. Saving...");
       PrintOutput(cars);
     }
 
