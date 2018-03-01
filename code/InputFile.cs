@@ -80,8 +80,8 @@ namespace lasagnas {
       this.OutputPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(inputPath), "..", "out", this.Name + ".out"));
       this.Lines = File.ReadAllLines(inputPath);
       this.Size = (int)(new FileInfo(inputPath).Length);
-      this.Data = new InputData();
-      this.Data.LoadLines(this.Lines);
+      this.InputData = new ProblemInputData();
+      this.InputData.LoadLines(this.Lines);
     }
 
     public void WriteOutput(string text) {
