@@ -127,7 +127,7 @@ namespace lasagnas {
           Log.Write ($"Checkpoint [{checkpoint.Ticks}] tick {tick}");
         }
 
-        Shuffle(cars);
+        // Shuffle(cars);
 
         foreach (var car in cars) {
           if (!car.IsFree (tick)) continue;
