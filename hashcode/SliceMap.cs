@@ -45,20 +45,24 @@ namespace hashcode
         }
 
         public void Print() {
+            var count = 0;
             Log.Debug();
             Log.Debug("--------------- SLICEMAP ---------------");
             for (var y = 0; y < map.Length; ++y) {
                 for (var x = 0; x < map[y].Length; ++x) {
-                    if (map[y][x] == -1)
+                    if (map[y][x] == -1) {
                         Log.Debug("x");
-                    else
+                    } else {
                         Log.Debug(map[y][x].ToString());
+                        count++;
+                    }
                     Log.Debug(" ");
                 }
                 Log.Debug();
             }
             Log.Debug("--------------- SLICEMAP ---------------");
             Log.Debug();
+            Log.Write($"Score {count}");
         }
     }
 }

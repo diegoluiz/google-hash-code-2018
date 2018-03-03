@@ -27,9 +27,7 @@ namespace hashcode
                 List<SliceType> sliceTypes = GetSliceTypes();
 
 
-                Log.Write($"pizza with {pizza.RowsCount * pizza.ColsCount} cells");
-                Log.Write($"MushroomCount={pizza.MushroomCount}");
-                Log.Write($"TomatoCount={pizza.TomatoCount}");
+                Log.Write($"Pizza with [{pizza.RowsCount * pizza.ColsCount}] cells - MushroomCount: [{pizza.MushroomCount}] - TomatoCount: [{pizza.TomatoCount}]");
 
                 foreach (var i in pizza.Grid)
                 {

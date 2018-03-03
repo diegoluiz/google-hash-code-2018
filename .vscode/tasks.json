@@ -7,7 +7,19 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/dotnet/hashcode/hashcode.csproj"
+                "${workspaceFolder}/hashcode/hashcode.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },  {
+            "label": "run",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--project", 
+                "${workspaceFolder}/hashcode/hashcode.csproj",
+                "${workspaceFolder}/data",
+                "--configuration=Release"
             ],
             "problemMatcher": "$msCompile"
         }
