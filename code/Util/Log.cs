@@ -1,15 +1,11 @@
 using System;
 using System.Diagnostics;
 
-namespace lasagnas {
+namespace lasagnas.Util {
 
   public static class Log {
 
     public static void Write (string text = "", params object[] args) {
-      Console.WriteLine (string.Format (text, args));
-    }
-
-    public static void Info (string text = "", params object[] args) {
       Console.WriteLine (string.Format (text, args));
     }
 
@@ -40,7 +36,7 @@ namespace lasagnas {
       }
       public void Dispose () {
         Stop ();
-        Info ($"{Name} took {Elapsed.TotalSeconds.ToString("0.###")} s");
+        Write ($"{Name} took {Elapsed.TotalSeconds.ToString("0.###")} s");
       }
     }
   }

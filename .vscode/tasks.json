@@ -19,7 +19,8 @@
         "run",
         "--project",
         "${workspaceFolder}/code/lasagnas.csproj",
-        "${workspaceFolder}/data"
+        "${workspaceFolder}/data",
+        "--configuration=Release"
       ],
       "problemMatcher": "$msCompile"
     }
