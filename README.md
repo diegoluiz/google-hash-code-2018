@@ -2,6 +2,9 @@
 
 Code for the Google Hashcode 2018
 
+You can find the details about the code on my blog.
+[Test round](http://diegoluiz.com/google-hash-code-test-round-2018/)
+
 ## Test Round
 
 Final Score: *47,953,286*
@@ -17,6 +20,7 @@ Score per file:
 ### Branches
 
 * [Submitted code](https://github.com/diegoluiz/google-hash-code-2018/tree/test-round)
+
 
 ## Qualification Round
 
